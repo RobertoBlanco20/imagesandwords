@@ -5,9 +5,11 @@ const Start = ({setConditional}) => {
     
     const handleClick = (e) => {
         e.preventDefault();
-        
+
         setConditional(true);
         return;
+
+        /* llamar las palabras */
     }
     return ( 
         

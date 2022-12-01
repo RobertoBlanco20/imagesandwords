@@ -5,27 +5,28 @@ import Game from './components/Game'
 function App() {
 
   const [ conditional, setConditional] = useState(false)
+  const [ photos, setPhotos ] = useState([])
+  const [ palabra, setPalabra ] = useState();
 
-  let palabra;
 
 
 
-  useEffect(() =>{ 
+  useEffect( () =>{ 
 
     const ApiData = async () => {
   
       /* Traemos la palabra a resolver */
-      if( conditional ){
         const url = `https://random-words-api.vercel.app/word/noun`;
   
   
         const respuesta = await fetch(url);
         const resultado = await respuesta.json();
-        palabra = resultado[0].word;
+        setPalabra(resultado[0].word);
+        console.log(palabra)
 
           APIPhoto() 
 
-      }
+
     }
   
     ApiData();
@@ -39,10 +40,11 @@ function App() {
       if(palabra){
        
             const APIKey = `31711953-ed260a8ccebd2c4cd107b6fd4`
-            const urlPhoto = `https://pixabay.com/api/?key=${APIKey}&q=${palabra}&image_type=photo`
+            const urlPhoto = `https://pixabay.com/api/?key=${APIKey}&q=${palabra}&per_page=4&image_type=photo`
             const respuestaPhoto = await fetch(urlPhoto);
             const resultadoPhoto = await respuestaPhoto.json();
-            console.log(resultadoPhoto)
+            setPhotos(resultadoPhoto.hits)
+            console.log(resultadoPhoto.hits)
       }
     }
   
@@ -57,7 +59,8 @@ function App() {
       />
       :
       <Game
-      
+        photos={photos}
+        key={photos.id}
      />
 
     
